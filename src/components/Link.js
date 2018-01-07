@@ -5,7 +5,6 @@ const Link = ({ active, children, onClick }) => {
   if (active) {
     return <span>{children}</span>;
   }
-  console.log('These are the fucking children: ', children);
 
   return (
     // eslint-disable-next-line
