@@ -2,21 +2,22 @@ import { connect } from 'react-redux';
 import { toggleTodo } from '../actions';
 import TodoList from '../components/TodoList';
 
+/* Changed the filter naming pattern from constants to the url params we use*/
 const getVisibleTodos = (todos, filter) => {
   switch (filter) {
-    case 'SHOW_ALL':
+    case 'all':
       return todos;
-    case 'SHOW_COMPLETED':
+    case 'completed':
       return todos.filter((t) => t.completed);
-    case 'SHOW_ACTIVE':
+    case 'active':
       return todos.filter((t) => !t.completed);
     default:
       throw new Error('Unknown filter: ' + filter);
   }
 };
 
-const mapStateToProps = (state) => ({
-  todos: getVisibleTodos(state.todos, state.visibilityFilter),
+const mapStateToProps = (state, ownProps) => ({
+  todos: getVisibleTodos(state.todos, ownProps.filter),
 });
 
 const mapDispatchToProps = {

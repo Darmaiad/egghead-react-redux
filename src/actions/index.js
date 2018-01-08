@@ -8,7 +8,6 @@ export const addTodo = (text) => ({
   text,
 });
 
-
 export const toggleTodo = (id) => ({
   type: 'TOGGLE_TODO',
   id,
