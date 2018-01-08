@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { toggleTodo } from '../actions';
 import TodoList from '../components/TodoList';
 
@@ -16,17 +17,22 @@ const getVisibleTodos = (todos, filter) => {
   }
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  todos: getVisibleTodos(state.todos, ownProps.filter),
+// Instead of ownProps, we use ES6 destructiring syntax to make it a little shorter
+const mapStateToProps = (state, {match}) => ({
+  todos: getVisibleTodos(
+    state.todos,
+    match.params.filter || 'all' /* Since param.filter is empty on the root path we add 'all' as a fallback*/
+  ),
 });
 
 const mapDispatchToProps = {
   onTodoClick: toggleTodo,
 };
 
-const VisibleTodoList = connect(
+// withRouter is a HOC that injects the router params to the connected component
+const VisibleTodoList = withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(TodoList);
+)(TodoList));
 
 export default VisibleTodoList;

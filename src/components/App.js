@@ -3,11 +3,13 @@ import Footer from './Footer';
 import AddTodo from '../containers/AddTodo';
 import VisibleTodoList from '../containers/VisibleTodoList';
 
-const App = ({ match }) => (
+// App component does not need the router params from the router
+// It just passed it down to VisibleTodoList
+// Instead, we will have VisibleTodoList to take the params with withRouter()
+const App = () => (
   <div>
     <AddTodo />
-    {/* Since param.filter is empty on the root path we add 'all' as a fallback*/}
-    <VisibleTodoList filter={match.params.filter || 'all'}/>
+    <VisibleTodoList />
     <Footer />
   </div>
 );
