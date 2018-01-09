@@ -5,7 +5,8 @@ import { withRouter } from 'react-router';
 import * as actions from '../actions';
 // All the knowledge of the state is encapsulated inside this method,
 // so when we call it below, we can pass the whole state object
-import { getVisibleTodos } from './../reducers/index'; // index may not be needed
+// Top-level selectors
+import { getVisibleTodos, getIsFetching } from './../reducers';
 import TodoList from '../components/TodoList';
 
 // We need to insert lifecycle hooks to fetch the data fromt he DB
@@ -23,14 +24,20 @@ class VisibleTodoListToBeConnected extends React.Component {
   }
 
   fetchData() {
-    const {filter, fetchMockTodos} = this.props;
+    const {filter, requestTodos, fetchMockTodos} = this.props;
+    
+    requestTodos(filter);
     fetchMockTodos(filter);
+    console.log(fetchMockTodos(filter));
   }
 
   render() {
     // toggle todo need to be passed with the name onTodoClick because that is what TodoList compoent expects
-    const {toggleTodo, ...rest} = this.props;
-    return <TodoList {...rest} onTodoClick={toggleTodo} />;
+    const {toggleTodo, todos, isFetching} = this.props;
+    if (isFetching && !todos.length) {
+      return <p>Loading...</p>;
+    }
+    return <TodoList todos={todos} onTodoClick={toggleTodo} />;
   }
 }
 
@@ -57,6 +64,7 @@ const mapStateToProps = (state, { match }) => {
   const filter = match.params.filter || 'all'; /* Since param.filter is empty on the root path, we add 'all' as a fallback*/
   return {
     todos: getVisibleTodos(state, filter),
+    isFetching: getIsFetching(state, filter),
     filter,
   };
 };
@@ -78,7 +86,11 @@ const VisibleTodoList = withRouter(connect(
 
 VisibleTodoListToBeConnected.propTypes = {
   filter: PropTypes.string,
-  receiveTodos: PropTypes.func,
+  fetchMockTodos: PropTypes.func,
+  toggleTodo: PropTypes.func,
+  todos: PropTypes.array,
+  isFetching: PropTypes.bool,
+  requestTodos: PropTypes.func,
 };
 
 export default VisibleTodoList;

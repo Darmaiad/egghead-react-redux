@@ -17,11 +17,16 @@ export const toggleTodo = (id) => ({
 // Removed export because we will be using the fetchMockTodos action
 const receiveTodos = (filter, response) => ({
   type: 'RECEIVE_TODOS',
-  response,
   filter,
+  response,
 });
 
 // Asynchronous action creator
 export const fetchMockTodos = (filter) => fetchTodos(filter).then((response) =>
   receiveTodos(filter, response)
 );
+
+export const requestTodos = (filter) => ({
+  type: 'REQUEST_TODOS',
+  filter,
+});
