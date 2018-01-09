@@ -2,34 +2,38 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { toggleTodo } from '../actions';
+import * as actions from '../actions';
 // All the knowledge of the state is encapsulated inside this method,
 // so when we call it below, we can pass the whole state object
 import { getVisibleTodos } from './../reducers/index'; // index may not be needed
 import TodoList from '../components/TodoList';
 import { fetchTodos } from './../mockBackend';
 
-
 // We need to insert lifecycle hooks to fetch the data fromt he DB
 // connect() already uses lifecycle hooks and we cannot override them
 // Insteas, we will create a class that will render the presentational component and will have lifecycle hooks of its own
 class VisibleTodoListToBeConnected extends React.Component {
   componentDidMount() {
-    fetchTodos(this.props.filter).then((todos) => {
-      console.log(this.props.filter, todos);
-    });
+    this.fetchData();
   }
 
   componentDidUpdate(prevProps) {
-    fetchTodos(this.props.filter).then((todos) => {
-      if (this.props.filter !== prevProps.filter) {
-        console.log(this.props.filter, todos);
-      }
+    if (this.props.filter !== prevProps.filter) {
+      this.fetchData();
+    }
+  }
+
+  fetchData() {
+    const {filter, receiveTodos} = this.props;
+    fetchTodos(filter).then((todos) => {
+      receiveTodos(filter, todos);
     });
   }
 
   render() {
-    return <TodoList {...this.props} />;
+    // toggle todo need to be passed with the name onTodoClick because that is what TodoList compoent expects
+    const {toggleTodo, ...rest} = this.props;
+    return <TodoList {...rest} onTodoClick={toggleTodo} />;
   }
 }
 
@@ -68,19 +72,16 @@ const mapStateToProps = (state, { match }) => {
   };
   Which is already shortened
 */
-const mapDispatchToProps = {
-  onTodoClick: toggleTodo,
-};
-
 
 // withRouter is a HOC that injects the router params to the connected component
 const VisibleTodoList = withRouter(connect(
   mapStateToProps,
-  mapDispatchToProps
+  actions // instead of { onTodoClick: toggleTodo, receiveTodos, }
 )(VisibleTodoListToBeConnected));
 
 VisibleTodoListToBeConnected.propTypes = {
   filter: PropTypes.string,
+  receiveTodos: PropTypes.func,
 };
 
 export default VisibleTodoList;
