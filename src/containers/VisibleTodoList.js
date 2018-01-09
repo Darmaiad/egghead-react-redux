@@ -14,7 +14,6 @@ import TodoList from '../components/TodoList';
 class VisibleTodoListToBeConnected extends React.Component {
   componentDidMount() {
     this.fetchData();
-    console.log(this.props);
   }
 
   componentDidUpdate(prevProps) {

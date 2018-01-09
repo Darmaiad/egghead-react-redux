@@ -2,6 +2,7 @@ import { applyMiddleware, createStore } from 'redux';
 import logger from 'redux-logger';
 // Importing the function directly so that we don't end up with the whole lodash library in the bundle
 import reducer from './reducers';
+import promiseMiddleware from 'redux-promise';
 
 // By default Reduc demands that action are plain objects
 const addPromiseSupportToDispatch = (store) => {
@@ -21,23 +22,17 @@ const addPromiseSupportToDispatch = (store) => {
     };
 };
 
-const wrapDispatchWithMiddleWares = (store, middlewares) => {
-    middlewares.forEach((middleware) => {
-        store.dispatch = middleware(store)(store.dispatch);
-    });
-};
-
 const configureStore = () => {
     const middlewares = [];
+    middlewares.push(promiseMiddleware);
+    // middlewares.push(addPromiseSupportToDispatch);
+    middlewares.push(logger);
 
     const store = createStore(
         reducer,
-        applyMiddleware(logger)
+        // persisted state goes before the enhancer
+        applyMiddleware(...middlewares) // Optional last argument, it is called an enhancer
     );
-
-    middlewares.push(addPromiseSupportToDispatch);
-
-    wrapDispatchWithMiddleWares(store, middlewares);
 
     return store;
 };
