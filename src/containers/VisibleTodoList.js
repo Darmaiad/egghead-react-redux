@@ -7,7 +7,6 @@ import * as actions from '../actions';
 // so when we call it below, we can pass the whole state object
 import { getVisibleTodos } from './../reducers/index'; // index may not be needed
 import TodoList from '../components/TodoList';
-import { fetchTodos } from './../mockBackend';
 
 // We need to insert lifecycle hooks to fetch the data fromt he DB
 // connect() already uses lifecycle hooks and we cannot override them
@@ -15,6 +14,7 @@ import { fetchTodos } from './../mockBackend';
 class VisibleTodoListToBeConnected extends React.Component {
   componentDidMount() {
     this.fetchData();
+    console.log(this.props);
   }
 
   componentDidUpdate(prevProps) {
@@ -24,10 +24,8 @@ class VisibleTodoListToBeConnected extends React.Component {
   }
 
   fetchData() {
-    const {filter, receiveTodos} = this.props;
-    fetchTodos(filter).then((todos) => {
-      receiveTodos(filter, todos);
-    });
+    const {filter, fetchMockTodos} = this.props;
+    fetchMockTodos(filter);
   }
 
   render() {
