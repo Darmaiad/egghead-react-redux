@@ -25,8 +25,8 @@ class VisibleTodoListToBeConnected extends React.Component {
   }
 
   fetchData() {
-    const { filter, fetchMockTodos } = this.props;
-    fetchMockTodos(filter)
+    const { filter, fetchTodos } = this.props;
+    fetchTodos(filter)
       // We have the Thunk to return a Promise. While the Thunk has no opinon on what you eturn from the Thunk, we can use the Promise here.
       .then(() => { // for instance we can use the Promise to log a message
         // console.log('Promise returned');
@@ -99,7 +99,7 @@ const VisibleTodoList = withRouter(connect(
 VisibleTodoListToBeConnected.propTypes = {
   filter: PropTypes.string,
   errorMessage: PropTypes.string,
-  fetchMockTodos: PropTypes.func,
+  fetchTodos: PropTypes.func,
   toggleTodo: PropTypes.func,
   todos: PropTypes.array,
   isFetching: PropTypes.bool,

@@ -8,6 +8,11 @@ const byId = (state = {}, action) => {
                 // meaning that the reducer stays pure
             });
             return nextState;
+        case 'ADD_TODO_SUCCESS':
+            return {
+                ...state,
+                [action.response.id]: action.response,
+            };
         default:
             return state;
     }
