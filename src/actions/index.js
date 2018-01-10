@@ -1,4 +1,6 @@
 // import { v4 } from 'uuid'; Id generation occurs now in the mock server
+import { normalize } from 'normalizr';
+import * as schema from './schema';
 import * as api from './../api';
 import { getIsFetching } from './../reducers';
 
@@ -6,10 +8,10 @@ import { getIsFetching } from './../reducers';
 
 // Async Thunk Action Creator
 export const addTodo = (text) => (dispatch) =>
-  api.addTodo(text).then((response)=>{
+  api.addTodo(text).then((response) => {
     dispatch({
       type: 'ADD_TODO_SUCCESS',
-      response,
+      response: normalize(response, schema.todo),
     });
   });
 
@@ -48,12 +50,13 @@ export const fetchTodos = (filter) => (dispatch, getState) => {
     filter,
   });
 
-  return api.fetchTodos(filter).then(
-    (response) => { // We don't need to return a promise. But it is convinient convention
+  return api.fetchTodos(filter).then( // We don't need to return a promise. But it is convinient convention
+    (response) => {
       dispatch({
         type: 'FETCH_TODOS_SUCCESS',
         filter,
-        response,
+        // Get the normalized response from the typical response and the schema
+        response: normalize(response, schema.arrayOfTodos),
       });
     },
     (error) => {
