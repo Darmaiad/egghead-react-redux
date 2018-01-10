@@ -6,7 +6,7 @@ const createList = (filter) => {
             return state;
         }
         switch (action.type) {
-            case 'RECEIVE_TODOS':
+            case 'FETCH_TODOS_SUCCESS':
                 console.log(action);
                 return action.response.map((todo) => todo.id);
             default:
@@ -19,19 +19,37 @@ const createList = (filter) => {
             return state;
         }
         switch (action.type) {
-            case 'REQUEST_TODOS':
+            case 'FETCH_TODOS_REQUEST':
                 return true;
-            case 'RECEIVE_TODOS':
+            case 'FETCH_TODOS_SUCCESS': // In both cases the loading indicator needs to be turned off
+            case 'FETCH_TODOS_FAILURE':
                 return false;
             default:
                 return state;
         }
     };
 
-    return combineReducers({ ids, isFetching });
+    // A reducer cannot have 'undefined' as an initial state, so we must make tha absence explicit
+    const errorMessage = (state = null, action) => {
+        if (action.filter !== filter) {
+            return state;
+        }
+        switch (action.type) {
+            case 'FETCH_TODOS_FAILURE':
+                return action.message;
+            case 'FETCH_TODOS_REQUEST': // In both cases we need to clear the error message
+            case 'FETCH_TODOS_SUCCESS':
+                return null;
+            default:
+                return state;
+        }
+    };
+
+    return combineReducers({ ids, isFetching, errorMessage });
 };
 
 export default createList;
 
 export const getIds = (state) => state.ids;
 export const getIsFetching = (state) => state.isFetching;
+export const getErrorMessage = (state) => state.errorMessage;

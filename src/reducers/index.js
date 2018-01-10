@@ -19,7 +19,7 @@ import createList, * as fromList from './createList';
     This convention will be followed for its selectors
 */
 
-// Now that the list and byId reducer is in a separate file, we can consider their state structure opaque, 
+// Now that the list and byId reducer is in a separate file, we can consider their state structure opaque,
 // meaning we will use their respective selectors
 
 const listByFilter = combineReducers({
@@ -45,5 +45,6 @@ export const getVisibleTodos = (state, filter) => {
 };
 
 export const getIsFetching = (state, filter) => fromList.getIsFetching(state.listByFilter[filter]);
+export const getErrorMessage = (state, filter) => fromList.getErrorMessage(state.listByFilter[filter]);
 
 // With the selectors pattern if we change the state of a reducer in the futere, we will not have to update the whole codebase

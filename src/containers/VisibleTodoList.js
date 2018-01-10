@@ -6,8 +6,9 @@ import * as actions from '../actions';
 // All the knowledge of the state is encapsulated inside this method,
 // so when we call it below, we can pass the whole state object
 // Top-level selectors
-import { getVisibleTodos, getIsFetching } from './../reducers';
+import { getVisibleTodos, getIsFetching, getErrorMessage } from './../reducers';
 import TodoList from '../components/TodoList';
+import FetchError from './../components/FetchError';
 
 // We need to insert lifecycle hooks to fetch the data fromt he DB
 // connect() already uses lifecycle hooks and we cannot override them
@@ -27,17 +28,26 @@ class VisibleTodoListToBeConnected extends React.Component {
     const { filter, fetchMockTodos } = this.props;
     fetchMockTodos(filter)
       // We have the Thunk to return a Promise. While the Thunk has no opinon on what you eturn from the Thunk, we can use the Promise here.
-      .then(() => { // for instance we can use the Promise to log a success message
-        console.log('Data were Fetched!');
+      .then(() => { // for instance we can use the Promise to log a message
+        // console.log('Promise returned');
       });
   }
 
   render() {
     // toggle todo need to be passed with the name onTodoClick because that is what TodoList compoent expects
-    const { toggleTodo, todos, isFetching } = this.props;
+    const { toggleTodo, errorMessage, todos, isFetching } = this.props;
+
     if (isFetching && !todos.length) {
       return <p>Loading...</p>;
     }
+
+    if (errorMessage && !todos.length) {
+      return <FetchError
+        message={errorMessage}
+        onRetry={() => this.fetchData()}
+      />;
+    }
+
     return <TodoList todos={todos} onTodoClick={toggleTodo} />;
   }
 }
@@ -66,6 +76,7 @@ const mapStateToProps = (state, { match }) => {
   return {
     todos: getVisibleTodos(state, filter),
     isFetching: getIsFetching(state, filter),
+    errorMessage: getErrorMessage(state, filter),
     filter,
   };
 };
@@ -87,6 +98,7 @@ const VisibleTodoList = withRouter(connect(
 
 VisibleTodoListToBeConnected.propTypes = {
   filter: PropTypes.string,
+  errorMessage: PropTypes.string,
   fetchMockTodos: PropTypes.func,
   toggleTodo: PropTypes.func,
   todos: PropTypes.array,

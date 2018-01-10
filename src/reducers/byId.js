@@ -1,7 +1,7 @@
 // It will change the value in the lookup table
 const byId = (state = {}, action) => {
     switch (action.type) {
-        case 'RECEIVE_TODOS':
+        case 'FETCH_TODOS_SUCCESS':
             const nextState = { ...state }; // Shallow copy, 1 level deep  
             action.response.forEach((todo) => {
                 nextState[todo.id] = todo // While '=' is a mutation operator it does not modify the state
