@@ -1,5 +1,6 @@
 import { applyMiddleware, createStore } from 'redux';
 import logger from 'redux-logger';
+import thunk from 'redux-thunk';
 // Importing the function directly so that we don't end up with the whole lodash library in the bundle
 import reducer from './reducers';
 
@@ -22,10 +23,10 @@ const addPromiseSupportToDispatch = (store) => {
 };
 
 // Standard middleware signature
-const thunk = (store) => (next) => (action) => {
+const customThunkMiddleware = (store) => (next) => (action) => {
     // If the action is a function (thunk) instead of an object (which is the standard) it needs to be called, with dispatch as an arg
     typeof action === 'function' ?
-        action(store.dispatch) :
+        action(store.dispatch, store.getState) :
         next(action); // If it is a regular action, we just pass it to the next middleware int the chain
 };
 
@@ -33,6 +34,7 @@ const configureStore = () => {
     const middlewares = [];
     // middlewares.push(addPromiseSupportToDispatch);
     middlewares.push(thunk);
+    // Run if environment is DEV:
     middlewares.push(logger);
 
     const store = createStore(

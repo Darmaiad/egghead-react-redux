@@ -24,13 +24,17 @@ class VisibleTodoListToBeConnected extends React.Component {
   }
 
   fetchData() {
-    const {filter, fetchMockTodos} = this.props;
-    fetchMockTodos(filter);
+    const { filter, fetchMockTodos } = this.props;
+    fetchMockTodos(filter)
+      // We have the Thunk to return a Promise. While the Thunk has no opinon on what you eturn from the Thunk, we can use the Promise here.
+      .then(() => { // for instance we can use the Promise to log a success message
+        console.log('Data were Fetched!');
+      });
   }
 
   render() {
     // toggle todo need to be passed with the name onTodoClick because that is what TodoList compoent expects
-    const {toggleTodo, todos, isFetching} = this.props;
+    const { toggleTodo, todos, isFetching } = this.props;
     if (isFetching && !todos.length) {
       return <p>Loading...</p>;
     }
