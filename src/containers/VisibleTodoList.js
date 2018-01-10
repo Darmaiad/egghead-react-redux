@@ -24,11 +24,8 @@ class VisibleTodoListToBeConnected extends React.Component {
   }
 
   fetchData() {
-    const {filter, requestTodos, fetchMockTodos} = this.props;
-    
-    requestTodos(filter);
+    const {filter, fetchMockTodos} = this.props;
     fetchMockTodos(filter);
-    console.log(fetchMockTodos(filter));
   }
 
   render() {
@@ -90,7 +87,6 @@ VisibleTodoListToBeConnected.propTypes = {
   toggleTodo: PropTypes.func,
   todos: PropTypes.array,
   isFetching: PropTypes.bool,
-  requestTodos: PropTypes.func,
 };
 
 export default VisibleTodoList;
