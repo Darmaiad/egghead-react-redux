@@ -1,6 +1,26 @@
 import { combineReducers } from 'redux';
 
 const createList = (filter) => {
+    // The state here is the lookup table todo ids to todo objects
+    const handleToggle = (state, action) => {
+        // Assign the Id inside the result to the variable toggleId (the Id of the toggled todo)
+        const { result: toggleId, entities } = action.response;
+        // From the entities arr we grab the bool completed
+        const { completed} = entities.todos[toggleId];
+        // There are two cases that we need to recalculate the the state:
+        const shouldRemove = (
+            // If the todo is now completed and we want to show the active todos
+            (completed && filter === 'active') ||
+            // If the todo is now not completed and we want to show the completed todos
+            (!completed && filter === 'completed')
+        );
+
+        return shouldRemove ?
+            state.filter((id) => id !== toggleId) :
+            // In the case we want to show all the todos, we simply return the state
+            state;
+    };
+
     const ids = (state = [], action) => {
         switch (action.type) {
             case 'FETCH_TODOS_SUCCESS':
@@ -11,6 +31,9 @@ const createList = (filter) => {
                 return filter !== 'completed' ?
                     [...state, action.response.result] :
                     state;
+            case 'TOGGLE_TODO_SUCCESS':
+                // Extracting the logic to a function
+                return handleToggle(state, action);
             default:
                 return state;
         }

@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 import reducer from './reducers';
 
 // By default Redux demands that actions are plain objects
-const addPromiseSupportToDispatch = (store) => {
+const addPromiseSupportToDispatch = (store) => { // eslint-disable-line no-unused-vars
     // We name the previous 'rawDispatch' as 'next' because this is the next dispatch function
     // after the previous middleware was applied (possibly was applied, it is not a given)
     return (next) => {
@@ -23,7 +23,7 @@ const addPromiseSupportToDispatch = (store) => {
 };
 
 // Standard middleware signature
-const customThunkMiddleware = (store) => (next) => (action) => {
+const customThunkMiddleware = (store) => (next) => (action) => { // eslint-disable-line no-unused-vars
     // If the action is a function (thunk) instead of an object (which is the standard) it needs to be called, with dispatch as an arg
     typeof action === 'function' ?
         action(store.dispatch, store.getState) :

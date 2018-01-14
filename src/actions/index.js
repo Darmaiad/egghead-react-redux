@@ -15,10 +15,14 @@ export const addTodo = (text) => (dispatch) =>
     });
   });
 
-export const toggleTodo = (id) => ({
-  type: 'TOGGLE_TODO',
-  id,
-});
+// Changing the action creator to a thunk action creator
+export const toggleTodo = (id) => (dispatch) =>
+  api.toggleTodo(id).then((response)=>{
+    dispatch({
+      type: 'TOGGLE_TODO_SUCCESS',
+      response: normalize(response, schema.todo),
+    });
+  });
 
 // Removed export because we will be using these two action creators inside the fetchMockTodos action
 // const requestTodos = (filter) => ({
