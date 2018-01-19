@@ -1,17 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// We gotta be aware of named exports
+import List from 'material-ui/List';
 import Todo from './Todo';
 
 const TodoList = ({ todos, onTodoClick }) => (
-  <ul>
-    {todos.map((todo) =>
-      <Todo
-        key={todo.id}
-        {...todo}
-        onClick={() => onTodoClick(todo.id)}
-      />
-    )}
-  </ul>
+    <List>
+      {todos.map((todo) =>
+        <Todo
+          key={todo.id}
+          {...todo}
+          onClick={() => onTodoClick(todo.id)}
+        />
+      )}
+    </List>
 );
 
 TodoList.propTypes = {

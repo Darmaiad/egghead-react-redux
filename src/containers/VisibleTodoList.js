@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { CircularProgress } from 'material-ui/Progress';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import * as actions from '../actions';
@@ -9,6 +10,17 @@ import * as actions from '../actions';
 import { getVisibleTodos, getIsFetching, getErrorMessage } from './../reducers';
 import TodoList from '../components/TodoList';
 import FetchError from './../components/FetchError';
+
+const styles = {
+  spinner: {
+    textAlign: 'center',
+    width: '40%',
+    marginTop: '10px',
+  },
+  possibleAdditionalStylesHere: {
+    // Style stuff
+  },
+};
 
 // We need to insert lifecycle hooks to fetch the data fromt he DB
 // connect() already uses lifecycle hooks and we cannot override them
@@ -38,7 +50,7 @@ class VisibleTodoListToBeConnected extends React.Component {
     const { toggleTodo, errorMessage, todos, isFetching } = this.props;
 
     if (isFetching && !todos.length) {
-      return <p>Loading...</p>;
+      return <div style={styles.spinner}><CircularProgress /></div>;
     }
 
     if (errorMessage && !todos.length) {
