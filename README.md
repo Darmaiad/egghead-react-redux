@@ -1,1 +1,7 @@
+# Building React Applications with Idiomatic Redux (egghead.io)
+
+This project is based on the free (and rather involved) [egghead.io](https://egghead.io/) course [Building React Applications with Idiomatic Redux](https://egghead.io/courses/building-react-applications-with-idiomatic-redux) by [Dan Abramov](https://github.com/gaearon/).
+
+The course continues from where the first part, [Getting Started with Redux](https://egghead.io/courses/getting-started-with-redux), left off.If you are not already experienced with Redux I suggest you start with the first part.
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
