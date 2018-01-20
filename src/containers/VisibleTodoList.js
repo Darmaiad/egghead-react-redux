@@ -15,16 +15,20 @@ const styles = {
   spinner: {
     textAlign: 'center',
     width: '40%',
-    marginTop: '10px',
+    marginTop: '15px',
+    marginBottom: '15px',
   },
   possibleAdditionalStylesHere: {
     // Style stuff
+  },
+  morePossibleAdditionalStylesHere: {
+    // Style more stuff
   },
 };
 
 // We need to insert lifecycle hooks to fetch the data fromt he DB
 // connect() already uses lifecycle hooks and we cannot override them
-// Insteas, we will create a class that will render the presentational component and will have lifecycle hooks of its own
+// Instead, we will create a class that will render the presentational component and will have lifecycle hooks of its own
 class VisibleTodoListToBeConnected extends React.Component {
   componentDidMount() {
     this.fetchData();

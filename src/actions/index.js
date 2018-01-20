@@ -39,12 +39,12 @@ export const toggleTodo = (id) => (dispatch) =>
 // Asynchronous action creator
 // We want an abstration that represents many actions dispatched over a period of time
 // So, instead of a promise we will return a function (thunk). The function takes dispatch as an argument,
-// meaning we can dispatch as many actions as we duting the async operation.
+// meaning we can dispatch as many actions as we during the async operation.
 export const fetchTodos = (filter) => (dispatch, getState) => {
   // When we request data from the server, we do not know if we are already fetching data
   // and we may make many requests before the first one finishes, creating a possible race condition
   // If we know whether we are fetching before requesting new data, we can solve this
-  if (getIsFetching(getState(), filter)) { // Get state belongs to the store object
+  if (getIsFetching(getState(), filter)) { // Get state belonging to the store object
     return Promise.resolve(); // Early exit from Thunk without dipatching any actions by returning a promise that resolves immediately
     // We could also write: return; but since we wrote Thunk to return a Promise, we might as well return one here
   }
