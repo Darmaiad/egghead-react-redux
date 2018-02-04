@@ -7,7 +7,7 @@
   "repository": {
         "type": "git",
         "url": "https://github.com/Darmaiad/egghead-react-redux.git"
-    }
+  },
   "dependencies": {
     "lodash": "^4.17.4",
     "material-ui": "^1.0.0-beta.27",
