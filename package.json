@@ -1,7 +1,6 @@
 {
   "name": "egghead-react-redux",
   "version": "1.0.0",
-  "private": true,
   "description": "The project developed based on the two free Egghead courses on Redux, by Dan Abramov",
   "author": "Darmaiad",
   "repository": {
