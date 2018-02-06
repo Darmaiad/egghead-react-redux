@@ -7,7 +7,6 @@ import VisibleTodoList from '../containers/VisibleTodoList';
 // It just passed it down to VisibleTodoList
 // Instead, we will have VisibleTodoList to take the params with withRouter()
 const App = () => {
-  console.log(this);
 return (
   <div>
     <AddTodo />
