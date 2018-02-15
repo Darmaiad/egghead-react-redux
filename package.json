@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "The project developed based on the two free Egghead courses on Redux, by Dan Abramov",
   "author": "Darmaiad",
-  "repository": {
-        "type": "git",
-        "url": "https://github.com/Darmaiad/egghead-react-redux.git"
-  },
   "dependencies": {
     "lodash": "^4.17.4",
     "material-ui": "^1.0.0-beta.27",
@@ -36,5 +32,9 @@
     "eslint-plugin-react": "^7.5.1",
     "install": "^0.10.2",
     "npm": "^5.6.0"
+  },
+  "repository": {
+        "type": "git",
+        "url": "https://github.com/Darmaiad/egghead-react-redux.git"
   }
 }
