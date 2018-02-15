@@ -1,6 +1,5 @@
 {
   "name": "egghead-react-redux",
-  "version": "1.0.0",
   "description": "The project developed based on the two free Egghead courses on Redux, by Dan Abramov",
   "author": "Darmaiad",
   "dependencies": {
@@ -33,6 +32,17 @@
     "install": "^0.10.2",
     "npm": "^5.6.0"
   },
+  "author": "Darmaiad",
+  "keywords": [
+    "react",
+    "redux",
+    "react-redux",
+    "material-ui",
+    "es6",
+    "reactjs",
+    "javascript"
+  ],
+  "license": "ISC",
   "repository": {
         "type": "git",
         "url": "https://github.com/Darmaiad/egghead-react-redux.git"
